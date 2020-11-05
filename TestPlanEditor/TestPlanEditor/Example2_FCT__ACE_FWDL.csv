@@ -1,0 +1,63 @@
+TESTNAME,SUBTESTNAME,SUBSUBTESTNAME,DESCRIPTION,FUNCTION,TIMEOUT,PARAM1,PARAM2,UNIT,LOW,HIGH,KEY,VAL,FAIL_COUNT
+
+Fixture_Setup,Channel,CHANNEL_ID,get the fixture channel id,dut.channel,10000,,,,1,4,,,
+Fixture_Setup,UUT_CHECK,UUT_DETECT,detect the DUT place into channel or not,dut.dut_check,30000,,,,,,,,
+
+System,Reset_Current,Fixture_Reset,reset the fixture to default setting,reset.reset,20000,,,,,,,,
+System,Reset_Current,PPVBUS_USB_CONN_DISCHARGE_CONNECT,,relay.relay,10000,PPVBUS_USB_CONN_DISCHARGE,CONNECT,,,,,,
+System,Reset_Current,PPBATT_VCC_DISCHARGE_CONNECT,,relay.relay,10000,PPBATT_VCC_DISCHARGE,CONNECT,,,,,,
+System,Reset_Current,PPVCC_MAIN_DISCHARGE_CONNECT,,relay.relay,10000,PPVCC_MAIN_DISCHARGE,CONNECT,,,,,,
+System,Reset_Current,PPVCC_HIGH_DISCHARGE_CONNECT,,relay.relay,10000,PPVCC_HIGH_DISCHARGE,CONNECT,,,,,,
+System,Reset_Current,SPK_BST_Discharge,connect 200ohm Res to PPV_BST_AUDIO,relay.relay,10000,PPV_BST_AUDIO_DISCHARGE,CONNECT,,,,,,
+System,Reset_Current,DELAY_1000MS_After_Connect_Discharge,delay 1000ms,delay.delay,10000,1000,,ms,,,,,
+System,Reset_Current,PPVBUS_USB_CONN_DISCHARGE_DISCONNECT,,relay.relay,10000,PPVBUS_USB_CONN_DISCHARGE,DISCONNECT,,,,,,
+System,Reset_Current,PPBATT_VCC_DISCHARGE_DISCONNECT,,relay.relay,10000,PPBATT_VCC_DISCHARGE,DISCONNECT,,,,,,
+System,Reset_Current,PPVCC_MAIN_DISCHARGE_DISCONNECT,,relay.relay,10000,PPVCC_MAIN_DISCHARGE,DISCONNECT,,,,,,
+System,Reset_Current,PPVCC_HIGH_DISCHARGE_DISCONNECT,,relay.relay,10000,PPVCC_HIGH_DISCHARGE,DISCONNECT,,,,,,
+System,Reset_Current,SPK_BST_Discharge_Disable,disconnect 200ohm Res to PPV_BST_AUDIO,relay.relay,10000,PPV_BST_AUDIO_DISCHARGE,DISCONNECT,,,,,,
+
+
+System,Reset_Current,5V0_To_VDM_EXT,provide 5V to VDM board PP_EXT,fixture.sendcmd,10000,change tx source voltage(1*5000*3500*PP_HVE),ACK,,,,,,
+System,Reset_Current,BATT_POWER_ON,battery power on,relay.relay,10000,BATT_OUTPUT_CTL,ON,,,,,,
+System,Reset_Current,DELAY_10MS_1,delay 10ms,delay.delay,10000,10,,ms,,,,,
+System,Reset_Current,VBATT_SET_4V3,raising up the battery to 4.3v,powerboard.setbattvolt,10000,4.3,,,,,,,
+System,Reset_Current,BATT_MODE_TO_SMALL,,relay.relay,10000,BATT_MODE_CTL,SMALL,,,,,,
+System,Reset_Current,PPBATT_VCC_FB,measure_PPBATT_VCC_voltage_TP9344,dmm.dmm,10000,PPBATT_VCC,,mV,4200,4500,,,3
+System,Reset_Current,BATT_RESET_CURRENT,reset current of battery,dmm.readsmallvolt,10000,BATT_CURRENT_SMALL,,mA,-3,10,,,3
+System,Reset_Current,BATT_MODE_TO_BIG,,relay.relay,10000,BATT_MODE_CTL,BIG,,,,,,
+
+System,Reset_Current,Power_To_VDM,VBUS_power_connected_to_VDM_PP_EXT,relay.relay,10000,PPVBUS_USB_PWR,TO_PP_EXT,,,,,,
+System,Reset_Current,DELAY_10MS_2,delay 10ms,delay.delay,10000,10,,ms,,,,,
+System,Reset_Current,USB_POWER_ON,USB_power_output_enable,relay.relay,10000,VBUS_OUTPUT_CTL,ON,,,,,,
+System,Reset_Current,DELAY_10MS_3,delay_0ms,delay.delay,10000,10,,ms,,,,,
+System,Reset_Current,PPVBUS_USB_Conn_VDM,PPVBUS_USB_CONN_connected_to_VDM_VBUS_power,relay.relay,10000,VDM_VBUS_TO_PPVBUS_USB_CONN,CONNECT,,,,,,
+System,Reset_Current,VBUS_to_5V,USB_output_5V,powerboard.setusbmainvolt,10000,5,,,,,,,
+System,Reset_Current,DELAY_1000mS_4,delay 1000ms,delay.delay,20000,1000,,ms,,,,,
+System,Reset_Current,VDM_CC1_TO_ACE_CC1,VDM_CC1_connected_to_ACE_CC1,relay.relay,10000,VDM_CC1,TO_ACE_CC1,,,,,,
+System,Reset_Current,DELAY_500MS_3,delay_500ms,delay.delay,10000,500,,ms,,,,,
+
+
+USBC,ACE_FWDL,ACE_SPI_To_ZYNQ,ACE SPI flash connected to xavier,relay.relay,10000,ACE_SPI_TO_ZYNQ,CONNECT,,,,,,
+USBC,ACE_FWDL,DELAY_100MS,delay 100ms,delay.delay,10000,100,,ms,,,,,
+USBC,ACE_FWDL,ACE_Erase,ACE SPI flash erase,acefwdl.FWDL_ZYNQ,20000,Erase_Only,,,,,,,
+USBC,ACE_FWDL,DELAY_500MS,delay 500ms,delay.delay,10000,500,,ms,,,,,
+USBC,ACE_FWDL,ACE_FWDL,ACE SPI flash firmware download,acefwdl.FWDL_ZYNQ,20000,programmer,,,,,,,
+USBC,ACE_FWDL,ACE_SPI_Disconnect,disconnected ACE SPI flash,relay.relay,10000,ACE_SPI_TO_ZYNQ,DISCONNECT,,,,,,
+
+System_State,Reset_Current_END,VBUS_to_0V,USB_output_5V,powerboard.setusbmainvolt,10000,0,,,,,,,
+System_State,Reset_Current_END,Disconnect_VBUS,disconnected VBUS power from DUT,relay.relay,10000,VBUS_OUTPUT_CTL,OFF,,,,,,
+System_State,Reset_Current_END,CC_Disconn,disconnected VDM_CC from DUT,relay.relay,10000,VDM_CC1,DISCONNECT,,,,,,
+System_State,Reset_Current_END,DELAY_500MS,delay 500ms,delay.delay,10000,500,,ms,,,,,
+
+System_State,Reset_Current_END,Fixture_Reset,,reset.reset,20000,,,,,,,,
+System_State,Reset_Current_END,PPBATT_VCC_DISCHARGE_CONNECT,,relay.relay,10000,PPBATT_VCC_DISCHARGE,CONNECT,,,,,,
+System_State,Reset_Current_END,PPVBUS_USB_CONN_DISCHARGE_CONNECT,,relay.relay,10000,PPVBUS_USB_CONN_DISCHARGE,CONNECT,,,,,,
+System_State,Reset_Current_END,PPVCC_MAIN_DISCHARGE_CONNECT,,relay.relay,10000,PPVCC_MAIN_DISCHARGE,CONNECT,,,,,,
+System_State,Reset_Current_END,Disable_Eload_Before_Connect,enable eload,fixture.sendcmd,10000,eload disable(1),,,,,,,
+System_State,Reset_Current_END,Set_Eload1_0mA_Before_Connect,set eload1 to 0mA,fixture.sendcmd,10000,eload set(1*cc*0),,,,,,,
+System_State,Reset_Current_END,SPK_BST_Discharge,connect 200ohm Res to PPV_BST_AUDIO,relay.relay,10000,PPV_BST_AUDIO_DISCHARGE,CONNECT,,,,,,
+System_State,Reset_Current_END,DELAY_1000MS_After_Connect_Discharge,delay 1000ms,delay.delay,10000,1000,,ms,,,,,
+System_State,Reset_Current_END,PPBATT_VCC_DISCHARGE_DISCONNECT,,relay.relay,10000,PPBATT_VCC_DISCHARGE,DISCONNECT,,,,,,
+System_State,Reset_Current_END,PPVBUS_USB_CONN_DISCHARGE_DISCONNECT,,relay.relay,10000,PPVBUS_USB_CONN_DISCHARGE,DISCONNECT,,,,,,
+System_State,Reset_Current_END,PPVCC_MAIN_DISCHARGE_DISCONNECT,,relay.relay,10000,PPVCC_MAIN_DISCHARGE,DISCONNECT,,,,,,
+System_State,Reset_Current_END,SPK_BST_Discharge_Disable,disconnect 200ohm Res to PPV_BST_AUDIO,relay.relay,10000,PPV_BST_AUDIO_DISCHARGE,DISCONNECT,,,,,,
